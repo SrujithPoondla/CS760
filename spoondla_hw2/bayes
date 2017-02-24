@@ -1,0 +1,19 @@
+#!/usr/bin/python
+import sys
+import pandas as pd
+import imp
+sys.path.append('/Users/srujithpoondla/Dropbox/Spring 2017/CS760/spoondla_hw2/src')
+# arff = imp.load_source('parse_arff', 'src/parse_arff.py')
+# # import src.parse_arff
+# NaiveBayes = imp.load_source('parse_arff', 'src/naive_bayes_tan.py')
+import parse_arff
+from naive_bayes_tan import NaiveBayes
+train_parser = parse_arff.ARFF_Parser()
+test_parser = parse_arff.ARFF_Parser()
+train_parser.parse(sys.argv[1])
+test_parser.parse(sys.argv[2])
+train_data = pd.DataFrame(train_parser.data)
+test_data = pd.DataFrame(test_parser.data)
+nb_classifier = NaiveBayes(train_parser,sys.argv[3])
+nb_classifier.fit(train_data)
+nb_classifier.predict(test_parser.data)
